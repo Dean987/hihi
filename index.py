@@ -1,16 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
-import firebase_admin
 
-
-
-from flask import Flask, render_template, request
 import firebase_admin
 from firebase_admin import credentials, firestore
-
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
+db = firestore.client()
 
+from flask import Flask, render_template, request
+from datetime import datetime, timezone, timedelta
 app = Flask(__name__)
 
 @app.route("/")
@@ -86,7 +84,7 @@ def search_movie():
             info += "抱歉，查無相關條件的電影資訊" 
         return info
         else:  
-            return render_template("search_movie")
+            return render_template("search_movie.html")
 
         
 
