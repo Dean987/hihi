@@ -75,7 +75,7 @@ def search_movie():
                 info += "片名：<a target = _blank href=" + doc.to_dict()["hyperlink"] + ">" + doc.to_dict()["title"] + "</a>" + "<br>" 
                 info += "分級資訊：" + doc.to_dict()["rate"] + "<br><br>"
         if info == "":
-            info += "查無此電影，<a href = http://www.atmovies.com.tw/movie/next/>前往官網</a>" 
+            info += "抱歉，查無相關條件的電影資訊</a>" 
         return info
     else:  
         return render_template("search_movie.html")
