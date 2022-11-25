@@ -11,6 +11,7 @@ from flask import Flask, render_template, request
 from datetime import datetime, timezone, timedelta
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     homepage += "<br><a href=/movie target = _blank>讀取開眼電影即將上映影片，寫入Firestore</a><br>"
@@ -68,7 +69,7 @@ def movie():
 
         doc_ref = db.collection("俊祥電影").document(movie_id)
         doc_ref.set(doc)
-        return "近期上映電影已爬蟲及存檔完畢，網站最近更新日期為：" + lastUpdate 
+return "近期上映電影已爬蟲及存檔完畢，網站最近更新日期為：" + lastUpdate 
 @app.route("/search_movie", methods=["POST","GET"])
 def search_movie():
     if request.method == "POST":
