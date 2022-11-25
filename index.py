@@ -15,44 +15,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    homepage = "<h1>陳俊祥Python讀取Firestore</h1>"
-    homepage += "<a href=/account>網頁表單輸入實例</a><br><br>"
-    homepage += "<a href=/search>課程查詢</a><br><br>"
     homepage += "<br><a href=/movie target = _blank>讀取開眼電影即將上映影片，寫入Firestore</a><br>"
     homepage += "<a href=/search_movie target = _blank>電影查詢</a><br>"
-
-
     return homepage
-
-@app.route("/account", methods=["GET", "POST"])
-def account():
-    if request.method == "POST":
-        user = request.form["user"]
-        pwd = request.form["pwd"]
-        result = "您輸入的帳號是：" + user + "; 密碼為：" + pwd 
-        return result
-    else:
-        return render_template("account.html")
-
-@app.route("/search", methods=["GET", "POST"])
-def search():
-    if request.method == "POST":
-        cond = request.form["keyword"]
-        result = "您輸入的課程關鍵字是：" + cond
-        db = firestore.client()
-        collection_ref = db.collection("1111")
-        docs = collection_ref.get()
-        result = ""
-        for doc in docs:
-            dict = doc.to_dict()
-            if cond in dict["Course"]:
-                #print("{}老師開的{}課程,每週{}於{}上課".format(dict["Leacture"], dict["Course"],  dict["Time"],dict["Room"]))
-                result += dict["Leacture"] + "老師開的" + dict["Course"] + "課程,每週"
-                result += dict["Time"] + "於" + dict["Room"] + "上課<br>" 
-
-    return result
-    else:
-        return render_template("search.html")
 
 
 
