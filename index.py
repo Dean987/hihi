@@ -17,12 +17,9 @@ def index():
     homepage += "<br><a href=/movie target = _blank>讀取開眼電影即將上映影片，寫入Firestore</a><br>"
     homepage += "<a href=/search_movie target = _blank>電影查詢</a><br>"
     return homepage
-
-
-
-
+    
 @app.route("/movie")
-def movie():   
+def movie():
     url = "http://www.atmovies.com.tw/movie/next/"
     Data = requests.get(url)
     Data.encoding = "utf-8"
@@ -58,31 +55,39 @@ def movie():
         showLength = show[13:]
 
         doc = {
-        "title":title,
-        "picture":picture,
-        "rate":rate,
-        "hyperlink":hyperlink,
-        "showDate":showDate,
-        "showLength":showLength,
-        "lastUpdate":lastUpdate
+            "title": title,
+            "picture": picture,
+            "rate": rate,
+            "hyperlink": hyperlink,
+            "showDate": showDate,
+            "showLength": showLength,
+            "lastUpdate": lastUpdate
         }
 
-        doc_ref = db.collection("俊祥電影").document(movie_id)
+        doc_ref = db.collection("心如電影").document(movie_id)
         doc_ref.set(doc)
-    return "近期上映電影已爬蟲及存檔完畢，網站最近更新日期為：" + lastUpdate 
+
+    return "近期上映電影已爬蟲及存檔完畢，網站最近更新日期為：" + lastUpdate     
+
+
+
+
+
+
+
 @app.route("/search_movie", methods=["POST","GET"])
 def search_movie():
     if request.method == "POST":
         MovieTitle = request.form["MovieTitle"]
         info = ""     
-        collection_ref = db.collection("俊祥電影")
+        collection_ref = db.collection("心如電影")
         docs = collection_ref.order_by("showDate").get()
         for doc in docs:
             if MovieTitle in doc.to_dict()["title"]: 
                 info += "片名：<a target = _blank href=" + doc.to_dict()["hyperlink"] + ">" + doc.to_dict()["title"] + "</a>" + "<br>" 
                 info += "分級資訊：" + doc.to_dict()["rate"] + "<br><br>"
         if info == "":
-            info += "抱歉，查無相關條件的電影資訊" 
+            info += "查無此電影，<a href = http://www.atmovies.com.tw/movie/next/>前往官網</a>" 
         return info
     else:  
         return render_template("search_movie.html")
