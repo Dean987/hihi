@@ -86,7 +86,7 @@ def search_movie():
             info += "抱歉，查無相關條件的電影資訊" 
         return info
         else:  
-            return render_template("search_movie.html")
+            return render_template("search_movie")
 
         
 
