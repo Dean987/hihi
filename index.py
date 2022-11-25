@@ -69,7 +69,7 @@ def movie():
 
         doc_ref = db.collection("俊祥電影").document(movie_id)
         doc_ref.set(doc)
-return "近期上映電影已爬蟲及存檔完畢，網站最近更新日期為：" + lastUpdate 
+    return "近期上映電影已爬蟲及存檔完畢，網站最近更新日期為：" + lastUpdate 
 @app.route("/search_movie", methods=["POST","GET"])
 def search_movie():
     if request.method == "POST":
@@ -84,8 +84,8 @@ def search_movie():
         if info == "":
             info += "抱歉，查無相關條件的電影資訊" 
         return info
-        else:  
-            return render_template("search_movie.html")
+    else:  
+        return render_template("search_movie.html")
 
         
 
